@@ -2,12 +2,13 @@ import { ChevronDown } from "lucide-react";
 import { useEffect } from "react";
 import { useState } from "react";
 import SyntaxHighlighter from "react-syntax-highlighter";
-import { codeExemples } from "../data/CodeExemples";
+import { codeExemples, floatingCards } from "../data/CodeExemples";
 import { nightOwl } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 export default function Hero() {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [activeTab, setActiveTab] = useState("App.jsx");
+    const currentFloatingCard = floatingCards[activeTab];
 
     useEffect(() => {
         function handleMouseMove(e) {
@@ -92,6 +93,20 @@ export default function Hero() {
                                 {codeExemples[activeTab]}
                             </SyntaxHighlighter>
                         </div>
+                    </div>
+                </div>
+
+                {/*Floating Cards*/}
+                <div className={`hidden lg:block absolute bottom-4 right-4 transform translate-x-8 translate-y-8 w-72 ${currentFloatingCard.bgColor} backdrop-blur-xl rounded-lg p-4 border border-white/20 shadow-xl`}>
+                    <div className="flex items-center space-x-2 mb-2">
+                        <div className={`w-6 h-6 ${currentFloatingCard.iconColor} flex items-center justify-center text-sm font-bold`}>{currentFloatingCard.icon}</div>
+                        <span className={`text-sm font-medium ${currentFloatingCard.textColor}`}>
+                            {currentFloatingCard.title}
+                        </span>
+                    </div>
+
+                    <div className={`text-sm text-left ${currentFloatingCard.contentColor}`}>
+                        {currentFloatingCard.content}
                     </div>
                 </div>
             </div>
